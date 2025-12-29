@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 import '../models/task_models.dart';
 
 class TaskController extends GetxController {
-  // اسم الـ Box الذي قمت بتعريفه في Hive
+  
   final String _boxName = "tasks_box";
 
   @override
@@ -21,30 +21,30 @@ class TaskController extends GetxController {
   // إضافة مهمة جديدة
   Future<void> addTask({Task? task}) async {
     var box = Hive.box<Task>(_boxName);
-    // Hive يستخدم المفاتيح تلقائياً إذا استخدمت add
+    
     await box.add(task!);
-    getTasks(); // تحديث القائمة بعد الإضافة
+    getTasks();
   }
 
   // جلب المهام
   void getTasks() {
     var box = Hive.box<Task>(_boxName);
-    // تحويل محتويات الـ Box إلى قائمة
+    
     taskList.assignAll(box.values.toList());
     filterTasks();
   }
 
   // حذف مهمة
   Future<void> delete(Task task) async {
-    // يجب أن يكون لمودل Task خاصية المفتاح (key) من Hive
+    
     await task.delete();
     getTasks();
   }
 
   // تحديث حالة الاكتمال
   Future<void> markTaskCompleted(Task task) async {
-    task.isCompleted = false; // افترضنا أن 1 يعني مكتمل
-    await task.save(); // حفظ التغيير في Hive
+    task.isCompleted = false; 
+    await task.save(); 
     getTasks();
   }
 
